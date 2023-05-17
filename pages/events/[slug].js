@@ -1,9 +1,9 @@
-import React from 'react'
+import Layout from "@/components/Layout"
 
 export default function EventPage() {
   return (
-    <div>
-        Single Event
-    </div>
+    <Layout title={'Event Page'}>
+        <h1>Single Event</h1>
+    </Layout>
   )
 }
