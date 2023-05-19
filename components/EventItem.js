@@ -11,6 +11,19 @@ export const EventItem = ({evt}) => {
         <div className={styles.img}>
             <Image src={evt.image ? evt.image : DjImg} alt="event-img" width={170} height={100} />
         </div>
+
+        <div className={styles.info}>
+            <span>{evt.date} at {evt.time}</span>
+            <h3>{evt.name}</h3>
+        </div>
+
+
+        <div className={styles.link}>
+            <Link className="btn" href={`/events/${evt.slug}`}>
+                Details
+            </Link>
+        </div>
+
     </div>
   )
 }

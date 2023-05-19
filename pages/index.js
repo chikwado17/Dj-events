@@ -1,5 +1,6 @@
 import EventItem from "@/components/EventItem";
 import Layout from "../components/Layout";
+import Link from "next/link";
 import { API_URL } from "@/config";
 
 //function to fetch api from our server which is the api in pages
@@ -10,7 +11,7 @@ export async function getServerSideProps () {
 
 
   return {
-    props: {events}
+    props: {events: events.slice(0,3)}
   }
 }
 
@@ -27,6 +28,10 @@ export default function Home({events}) {
         {events.map(evt => (
           <EventItem key={evt.id} evt={evt} />
         ))}
+
+        {events.length > 0 && (
+          <Link className="btn-secondary" href={'/events'}>view all events</Link>
+        )}
       </div>
     </Layout>
   )
