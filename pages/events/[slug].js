@@ -7,22 +7,23 @@ import Image from "next/image";
 
 
 
-//function to get a single event
-export const getServerSideProps = async ({query: {slug} }) => {
+//function getting a single data from params => slug in this case
+export const getServerSideProps = async ({params}) => {
 
-  const res = await fetch(`${API_URL}/api/events/${slug}`);
-
-  const events = await res.json();
-
-    return {
-      props: {
-        evt: events[0]
-      }
+  const { slug } = params;
+  const res = await fetch(`${API_URL}/events?filters[slug]=${slug}&populate=*`);
+  // console.log(res)
+ 
+  return {
+    props: {
+      evt: await res.json()
     }
-} 
+  }
+}
 
 export default function EventPage({evt}) {
 
+  // console.log(evt.data[0].attributes.image.data[0].attributes.url)
 
   const deleteEvent = () => {
     console.log('delete')
@@ -33,7 +34,7 @@ export default function EventPage({evt}) {
     <Layout title={'Event Page'}>
       <div className={styles.event}>
           <div className={styles.controls}>
-              <Link href={`/events/edit/${evt.id}`}>
+              <Link href={`/events/edit/${evt.data[0].id}`}>
                   <FaPencilAlt /> Edit Event
               </Link>
 
@@ -42,23 +43,23 @@ export default function EventPage({evt}) {
               </a>
           </div>
 
-          <span>{evt.date} at {evt.time}</span>
-          <h1>{evt.name}</h1>
+          <span>{evt.data[0].attributes.date} at {evt.data[0].attributes.time}</span>
+          <h1>{evt.data[0].attributes.name}</h1>
 
-          {evt.image && (
+          {evt.data[0].attributes.image.data[0].attributes.url && (
             <div className={styles.image}>
-                <Image src={evt.image} width={960} height={600} alt="image" />
+                <Image src={evt.data[0].attributes.image.data[0].attributes.url} width={960} height={600} alt="image" />
             </div>
           )}
 
           <h3> Performers: </h3>
-          <p>{evt.performers}</p>
+          <p>{evt.data[0].attributes.performers}</p>
 
           <h3>Description: </h3>
-          <p>{evt.description}</p>
+          <p>{evt.data[0].attributes.description}</p>
 
-          <h3>{`Venue: ${evt.venue}`}</h3>
-          <p>{evt.address}</p>
+          <h3>{`Venue: ${evt.data[0].attributes.venue}`}</h3>
+          <p>{evt.data[0].attributes.address}</p>
 
 
           <Link className={styles.back} href={'/events'}>
