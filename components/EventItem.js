@@ -16,7 +16,8 @@ export const EventItem = ({evt, imgs}) => {
         </div>
 
         <div className={styles.info}>
-            <span>{evt.attributes.date} at {evt.attributes.time}</span>
+            
+            <span>{new Date(evt.attributes.date).toLocaleDateString('en-US')} at {evt.attributes.time}</span>
             <h3>{evt.attributes.name}</h3>
         </div>
 

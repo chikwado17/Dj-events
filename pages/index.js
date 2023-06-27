@@ -5,7 +5,7 @@ import { API_URL } from "@/config";
 
 //function to fetch api from our server which is the api in pages
 export async function getServerSideProps () {
-  const res = await fetch(`${API_URL}/events?populate=*`);
+  const res = await fetch(`${API_URL}/events?populate=*&sort=date:ASC&pagination[limit]=3`);
 
   const events = await res.json();
 
@@ -28,7 +28,7 @@ export default function Home({events}) {
 
         {/* console.log(evt.attributes.image.data[0].attributes.url) */}
 
-        {events && events.data.map(evt => (
+        {events && events?.data.map(evt => (
           <EventItem key={evt.id} evt={evt} imgs={evt.attributes.image.data[0].attributes} />
         ))}
 

@@ -43,7 +43,7 @@ export default function EventPage({evt}) {
               </a>
           </div>
 
-          <span>{evt.data[0].attributes.date} at {evt.data[0].attributes.time}</span>
+          <span>{new Date(evt.data[0].attributes.date).toLocaleDateString('en-US')} at {evt.data[0].attributes.time}</span>
           <h1>{evt.data[0].attributes.name}</h1>
 
           {evt.data[0].attributes.image.data[0].attributes.url && (
