@@ -12,7 +12,7 @@ export const EventItem = ({evt, imgs}) => {
   return (
     <div className={styles.event}>
         <div className={styles.img}>
-            <Image src={imgs.url ? imgs.url : DjImg} alt="event-img" width={170} height={100} />
+            <Image src={!imgs?.url ? DjImg: imgs?.url } alt="event-img" width={170} height={100} />
         </div>
 
         <div className={styles.info}>

@@ -2,6 +2,7 @@ import EventItem from "@/components/EventItem";
 import Layout from "../components/Layout";
 import Link from "next/link";
 import { API_URL } from "@/config";
+import DjImg from '@/public/images/event-default.png';
 
 //function to fetch api from our server which is the api in pages
 export async function getServerSideProps () {
@@ -29,7 +30,7 @@ export default function Home({events}) {
         {/* console.log(evt.attributes.image.data[0].attributes.url) */}
 
         {events && events?.data.map(evt => (
-          <EventItem key={evt.id} evt={evt} imgs={evt.attributes.image.data[0].attributes} />
+          <EventItem key={evt.id} evt={evt} imgs={evt.attributes.image.data === null ? DjImg : evt.attributes.image.data[0]?.attributes} />
         ))}
 
         {events.length > 0 && (
