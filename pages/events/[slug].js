@@ -8,7 +8,7 @@ import Link from "next/link";
 import Image from "next/image";
 import DjImg from '@/public/images/event-default.png';
 import { useRouter } from "next/router";
-
+import moment from "moment";
 
 //function getting a single data from params => slug in this case
 export const getServerSideProps = async ({params}) => {
@@ -52,7 +52,7 @@ export default function EventPage({evt}) {
     <Layout title={'Event Page'}>
       <div className={styles.event}>
           <div className={styles.controls}>
-              <Link href={`/events/edit/${evt.data[0].id}`}>
+              <Link href={`/events/edit/${evt?.data[0]?.id}`}>
                   <FaPencilAlt /> Edit Event
               </Link>
 
@@ -60,24 +60,25 @@ export default function EventPage({evt}) {
                 <FaTimes /> Delete Event
               </a>
           </div>
-
-          <span>{new Date(evt.data[0].attributes.date).toLocaleDateString('en-US')} at {evt.data[0].attributes.time}</span>
-          <h1>{evt.data[0].attributes.name}</h1>
+          
+          <span>{moment(evt.data[0]?.attributes.date).format('yyyy-MM-DD')} at {evt.data[0]?.attributes.time}</span>
+          <h1>{evt.data[0]?.attributes.name}</h1>
             <ToastContainer />
          
+         {evt.data[0]?.attributes?.image.data &&
             <div className={styles.image}>
-                <Image src={evt.data[0].attributes.image.data === null ? DjImg : evt.data[0].attributes.image.data[0].attributes.url} width={960} height={600} alt="image" />
+                <Image src={evt.data[0]?.attributes?.image.data === null ? DjImg : evt.data[0]?.attributes.image.data[0]?.attributes.url} width={960} height={600} alt="image" />
             </div>
-          
+          }
 
           <h3> Performers: </h3>
-          <p>{evt.data[0].attributes.performers}</p>
+          <p>{evt.data[0]?.attributes.performers}</p>
 
           <h3>Description: </h3>
-          <p>{evt.data[0].attributes.description}</p>
+          <p>{evt.data[0]?.attributes.description}</p>
 
-          <h3>{`Venue: ${evt.data[0].attributes.venue}`}</h3>
-          <p>{evt.data[0].attributes.address}</p>
+          <h3>{`Venue: ${evt.data[0]?.attributes.venue}`}</h3>
+          <p>{evt.data[0]?.attributes.address}</p>
 
 
           <Link className={styles.back} href={'/events'}>
